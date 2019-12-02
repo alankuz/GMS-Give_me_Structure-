@@ -3,8 +3,11 @@ import { NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
+  Collapse,
   Container,
   Navbar,
+  NavbarToggler,
+  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
@@ -31,6 +34,9 @@ const NavBar = () => {
     <div className="nav-container">
       <Navbar color="light" light expand="md">
         <Container>
+        <NavbarBrand href="/">Give Me Structure</NavbarBrand>
+          <NavbarToggler onClick={toggle} />
+          <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
                 <NavLink
@@ -41,6 +47,8 @@ const NavBar = () => {
                 >
                   Home
                 </NavLink>
+              </NavItem>
+              <NavItem>
               </NavItem>
             </Nav>
             <Nav className="d-none d-md-block" navbar>
@@ -139,6 +147,7 @@ const NavBar = () => {
                 </NavItem>
               </Nav>
             )}
+          </Collapse>
         </Container>
       </Navbar>
     </div>
