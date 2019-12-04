@@ -1,12 +1,19 @@
 import React, { Component } from "react";
+import { useAuth0 } from "../react-auth0-spa";
+
 
 import { Row, Col, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import contentData from "../utils/contentData";
 import TimePicker from 'react-bootstrap-time-picker';
+import axios from "axios";
+import API from "../utils/API";
+
+
 
 class MyForm extends React.Component {
+
     constructor(props) {
         super(props);
 
@@ -54,8 +61,10 @@ class MyForm extends React.Component {
             }
         }
     }
+
     testerForArry(data) {
-        let testArray = data;
+
+        let testArray = this.state;
         let tempArray = [];
         const entries = Object.entries(testArray)
         console.log(entries)
@@ -73,7 +82,17 @@ class MyForm extends React.Component {
         console.log(testArray)
         console.log(tempArray)
 
-    }
+        API.saveSchedule({
+            user: 'user',
+            message: tempArray
+        })
+console.log('sent');
+
+    };
+
+
+
+
 
 
 
@@ -160,7 +179,7 @@ class MyForm extends React.Component {
                         <input type="time" value={this.state.sundaySchoolEnd} onChange={(event) => this.setState({ sundaySchoolEnd: event.target.value })} />
                     </Col>
                 </Row>
-                <Button color="primary" className="btn btn-danger float-right mt-4 mb-3" onClick={(event) => { this.testerForArry(this.state); }}>Submit Schedule</Button>
+                <Button color="primary" className="btn btn-danger float-right mt-4 mb-3" onClick= {(event) => {this.testerForArry()}}>Submit Schedule</Button>
             </div>
         )
 

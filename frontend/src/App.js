@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import NewSchedule from "./views/NewSchedule";
+import Schedule from "./views/Schedule";
 import Profile from "./views/Profile";
 import { useAuth0 } from "./react-auth0-spa";
 import history from "./utils/history";
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
             <Route path="/addschedule" exact component={NewSchedule} />
+            <Route path="/schedule" exact component={Schedule} />
 
           </Switch>
         </Container>

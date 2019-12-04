@@ -5,14 +5,17 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
 
+
+
 const API_PORT = 3001;
 const app = express();
-app.use(cors());
+// app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
+
 const dbRoute =
-'mongodb+srv://alankuz:alan1234@gms-ifie9.mongodb.net/test?retryWrites=true&w=majority'
+'mongodb+srv://alankuz:1234@gms-ifie9.mongodb.net/test?retryWrites=true&w=majority'
 
 // connects our back end code with the database
 mongoose.connect(dbRoute, { useNewUrlParser: true });
@@ -42,8 +45,8 @@ router.get('/getData', (req, res) => {
 // this is our update method
 // this method overwrites existing data in our database
 router.post('/updateData', (req, res) => {
-  const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, (err) => {
+  const { user, update } = req.body;
+  Data.findByIdAndUpdate(user, update, (err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -52,8 +55,8 @@ router.post('/updateData', (req, res) => {
 // this is our delete method
 // this method removes existing data in our database
 router.delete('/deleteData', (req, res) => {
-  const { id } = req.body;
-  Data.findByIdAndRemove(id, (err) => {
+  const { user } = req.body;
+  Data.findByIdAndRemove(user, (err) => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -64,16 +67,16 @@ router.delete('/deleteData', (req, res) => {
 router.post('/putData', (req, res) => {
   let data = new Data();
 
-  const { id, message } = req.body;
+  const { user, message } = req.body;
 
-  if ((!id && id !== 0) || !message) {
+  if (!message) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
     });
   }
   data.message = message;
-  data.id = id;
+  data.user = user;
   data.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
