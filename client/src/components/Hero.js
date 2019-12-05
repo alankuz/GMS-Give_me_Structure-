@@ -9,6 +9,8 @@ import { NavLink as RouterNavLink, Link } from "react-router-dom";
 
 const Hero = () => {
   const { user } = useAuth0();
+  if(!user){}else{  window.myVar = user.name;}
+
   if (!user) {
     return (
       <div className="text-center hero my-5">

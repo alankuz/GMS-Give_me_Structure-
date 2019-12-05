@@ -33,3 +33,13 @@
 .mainTitle {
   text-align: center;
 }
+.results {
+  font-size:32px;
+  font-weight: bolder;
+  text-align: center;
+  display: inline-block;
+  width: 50%;
+  background-color: blue;
+  color:white;
+  border: solid black;
+}

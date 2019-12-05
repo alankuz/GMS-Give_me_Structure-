@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useAuth0 } from "../react-auth0-spa";
+import { useAuth0, Auth0Provider } from "../react-auth0-spa";
 
 
 import { Row, Col, Button } from "reactstrap";
@@ -14,10 +14,16 @@ import API from "../utils/API";
 
 class MyForm extends React.Component {
 
+componentDidMount () {
+    console.log(window.myVar)
+}
+
+
     constructor(props) {
         super(props);
 
         this.state = {
+
             wakeUptime: '',
             bedTime: '',
             mondayWorkStart: '',
@@ -77,26 +83,58 @@ class MyForm extends React.Component {
                 tempArray.push(entries[i]);
             }
 
-
         }
+        this.putDataToDB(tempArray)
+
         console.log(testArray)
         console.log(tempArray)
 
-        API.saveSchedule({
-            user: 'user',
-            message: tempArray
-        })
-console.log('sent');
 
+        console.log('sent');
+
+    };
+
+
+    // =======================
+
+    async getUserinfo() {
+        console.log('getting user info in getUserInfo()');
+        try {
+          let response = await fetch('https://dev-c3iq16uz.auth0.com/userinfo', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              Authorization: 'Bearer'  + this.state.token.accessToken,
+            },
+          });
+          let responseJson = await response.json();
+          if(responseJson !== null) {
+            console.log('Got user info: ' + responseJson.email);
+            this.setState({profile: responseJson});
+            console.log(responseJson)
+          }
+        } catch (error) {
+          console.log('Error in retrieving userinfo from Auth0: ' + error.message)
+        }
+      }
+    //   =================
+    putDataToDB = message => {
+        let idToBeAdded = window.myVar;
+
+
+        axios.post("http://localhost:3001/api/putData", {
+            id: idToBeAdded,
+            message: message
+        });
     };
 
 
 
 
 
-
-
     render() {
+
         return (
             <div>
                 <h3>Enter Daily Wakeup Time</h3>
@@ -179,7 +217,7 @@ console.log('sent');
                         <input type="time" value={this.state.sundaySchoolEnd} onChange={(event) => this.setState({ sundaySchoolEnd: event.target.value })} />
                     </Col>
                 </Row>
-                <Button color="primary" className="btn btn-danger float-right mt-4 mb-3" onClick= {(event) => {this.testerForArry()}}>Submit Schedule</Button>
+                <Button color="primary" className="btn btn-danger float-right mt-4 mb-3" onClick={(event) => { this.testerForArry() }}>Submit Schedule</Button>
             </div>
         )
 
