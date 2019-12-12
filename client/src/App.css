@@ -1,3 +1,6 @@
+@import '~../node_modules/react-agenda/build/styles.css';
+@import '~../node_modules/react-datetime/css/react-datetime.css';
+@import '../node_modules/react-agenda/example/src/App.css';
 .next-steps .fa-link {
   margin-right: 5px;
 }
