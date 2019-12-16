@@ -9,7 +9,10 @@ import { NavLink as RouterNavLink, Link } from "react-router-dom";
 
 const Hero = () => {
   const { user } = useAuth0();
-  if(!user){}else{  window.myVar = user.name;}
+  if(!user){}else{  
+
+    localStorage.setItem('account', user.name);
+  }
 
   if (!user) {
     return (
@@ -26,8 +29,8 @@ const Hero = () => {
 
         <p className="lead">
           <ButtonGroup vertical>
-            <Link to="/addschedule"><Button color="primary" className="mb-1" >Create Schedule</Button></Link>
             <RouterNavLink to="/schedule"><Button color="primary" className="mb-1">View Schedule</Button></RouterNavLink>
+            <Link to="/analytics"><Button color="primary" className="mb-1" >Analytics</Button></Link>
               <Button className="mb-1">Blog *Coming Soon*</Button>
               <Button color="primary">Contact</Button>
     </ButtonGroup>

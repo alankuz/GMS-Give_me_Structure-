@@ -20,17 +20,20 @@ app.use(logger("dev"));
 
 
 router.get("/getData", (req, res) => {
-  Data.find((err, data) => {
+  Data.find({id:'goodtest'},(err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
 router.post("/updateData", (req, res) => {
-  const { id, update } = req.body;
-  Data.findByIdAndUpdate(id, update, err => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
+  const { _id, name, startDateTime, endDateTime, classes } = req.body;
+  // Data.findByIdAndUpdate(_id, update, err => {
+  //   if (err) return res.json({ success: false, error: err });
+  //   return res.json({ success: true });
+  // });
+  Data.updateMany({ _id: _id }, {name:name, startDateTime:startDateTime, endDateTime:endDateTime, classes:classes } , (err)=> {
+    if (err) return console.log(err)
   });
 });
 
@@ -52,7 +55,7 @@ router.post("/putData", (req, res) => {
   console.log('\n')
   // console.log(Data)
 
-  Data.updateOne({ id: id }, { $push: { message: message } }, (err)=> {
+  Data.updateOne({ id: id }, { $push: { message: message }},{upsert:true}, (err)=> {
     if (err) return console.log(err)
   });
  
