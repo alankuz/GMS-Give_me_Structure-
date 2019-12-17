@@ -102,11 +102,22 @@ export default class Agenda extends Component {
 
   }
   getDataFromDb = () => {
-    fetch("http://localhost:3001/api/getData")
+    const userId = localStorage.getItem('account');
+    console.log(userId);
+    fetch("/api/getData", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: userId })
+    })
       .then(data => data.json())
       .then(res => {
         // console.log(this.state.items); 
-        // console.log(res.data[0].message);
+        console.log(res.data[0]);
+
+
+        if (!res.data[0]){console.log('nothing')}else{
         var temp = res.data[0].message
         for (let i = 0; i < temp.length; i++) {
           temp[i].endDateTime = new Date(temp[i].endDateTime)
@@ -116,7 +127,7 @@ export default class Agenda extends Component {
         console.log(items)
         
         this.setState({ items: temp })
-      });
+      }});
   };
   putDataToDB = message => {
     let idToBeAdded = localStorage.getItem('account');
@@ -141,6 +152,18 @@ export default class Agenda extends Component {
       this.setState({ selected: [item] })
       return this._openModal();
     }
+    console.log('HEELLLLOOOOo')
+    console.log(this.state);
+    console.log(item._id);
+    axios.post("/api/updateData", {
+      _id: item._id,
+      name: item.name,
+      startDateTime: item.startDateTime,
+      endDateTime: item.endDateTime,
+      classes: item.classes
+    })
+      .then(res => console.log('res: ', res))
+      .catch(err => console.log(err));
 
 
 
@@ -202,6 +225,18 @@ export default class Agenda extends Component {
   removeEvent(items, item) {
     console.log(item)
     this.setState({ items: items });
+    axios.post("/api/deleteData", {
+      userId: localStorage.getItem('account'),
+      itemId: item._id,
+      name: item.name,
+      startDateTime: item.startDateTime,
+      endDateTime: item.endDateTime,
+      classes: item.classes
+    })
+      .then(res => console.log('res: ', res))
+      .catch(err => console.log(err));
+
+    this._closeModal();
   }
 
   addNewEvent(items, newItems) {
@@ -210,7 +245,7 @@ export default class Agenda extends Component {
     this._closeModal();
     let idToBeAdded = localStorage.getItem('account');
     // let idToBeAdded = window.myVar;
-
+    console.log(idToBeAdded);
 
     axios.post("http://localhost:3001/api/putData", {
       id: idToBeAdded,
@@ -221,14 +256,28 @@ export default class Agenda extends Component {
     console.log(this.state.selected)
     console.log(item)
     this.setState({ showModal: false, selected: [], items: items });
-    axios.post("http://localhost:3001/api/updateData", {
-      _id: this.state.selected._id,
+    // axios.post("http://localhost:3001/api/updateData", {
+    //   _id: this.state.selected._id,
+    //   name: item.name,
+    //   startDateTime: item.startDateTime,
+    //   endDateTime: item.endDateTime,
+    //   classes: item.classes
+
+    // });
+    console.log('HEELLLLOOOOo')
+    console.log(this.state);
+    console.log(item._id);
+    axios.post("/api/updateData", {
+      userId: localStorage.getItem('account'),
+      itemId: item._id,
       name: item.name,
       startDateTime: item.startDateTime,
       endDateTime: item.endDateTime,
       classes: item.classes
+    })
+      .then(res => console.log('res: ', res))
+      .catch(err => console.log(err));
 
-    });
     this._closeModal();
 
   }
