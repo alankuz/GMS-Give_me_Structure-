@@ -27,17 +27,17 @@ app.use(function(req, res, next) {
   res.setHeader('Cache-Control', 'no-cache');
   next();
 });
-const router = express.Router();
-//Static file declaration
-router.get(express.static(path.join(__dirname, '../client/build')));
-//production mode
-if(process.env.NODE_ENV === 'production') {
-  router.get(express.static(path.join(__dirname, '../client/build')));
-  //
-  // app.get('/*', (req, res) => {
-  //   res.sendfile(path.join(__dirname = '../client/build/index.html'));
-  // })
-}
+// const router = express.Router();
+// //Static file declaration
+// router.get(express.static(path.join(__dirname, '../client/build')));
+// //production mode
+// if(process.env.NODE_ENV === 'production') {
+//   router.get(express.static(path.join(__dirname, '../client/build')));
+//   //
+//   // app.get('/*', (req, res) => {
+//   //   res.sendfile(path.join(__dirname = '../client/build/index.html'));
+//   // })
+// }
 // //build mode
 // app.get('/*', (req, res) => {
 //   res.sendFile(path.join(__dirname+'/../client/public/index.html'));
@@ -159,6 +159,6 @@ router.post("/putData", (req, res) => {
   
 });
 
-// app.use("/api", router);
+app.use("/api", router);
 
 app.listen(API_PORT, () => console.log(`LISTENING ON UHH PORT ${API_PORT}`));
