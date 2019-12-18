@@ -10,7 +10,7 @@ const PutDataToDB = message => {
     console.log(message)  
     console.log(idToBeAdded)  
 
-    axios.post("http://localhost:3001/api/putData", { 
+    axios.post("/api/putData", { 
       id: idToBeAdded,
       message: message
     });

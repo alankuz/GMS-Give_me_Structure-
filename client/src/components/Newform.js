@@ -118,7 +118,7 @@ class MyForm extends React.Component {
         let idToBeAdded = window.myVar;
 
 
-        axios.post("http://localhost:3001/api/putData", {
+        axios.post("/api/putData", {
             id: idToBeAdded,
             message: message
         });
