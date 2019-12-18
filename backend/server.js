@@ -16,7 +16,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
-const router = express.Router();
+// const router = express.Router();
 //Static file declaration
 app.use(express.static(path.join(__dirname, '../client/build')));
 //production mode
@@ -33,14 +33,14 @@ app.get('*', (req, res) => {
 })
 
 
-router.post("/getData", (req, res) => {
+app.post("/api/getData", (req, res) => {
   Data.find({id: req.body.id},(err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
-router.post("/updateData", (req, res) => {
+app.post("/api/updateData", (req, res) => {
   console.log('hit update')
   console.log(req.body);
   const { itemId, name, startDateTime, endDateTime, classes } = req.body;
@@ -88,7 +88,7 @@ router.post("/updateData", (req, res) => {
   // });
 });
 
-router.post("/deleteData", (req, res) => {
+app.post("/api/deleteData", (req, res) => {
   const { itemId, name, startDateTime, endDateTime, classes, userId } = req.body;
   console.log("TCL: userId", userId)
   console.log("TCL: classes", classes)
@@ -118,7 +118,7 @@ router.post("/deleteData", (req, res) => {
   })
 });
 
-router.post("/putData", (req, res) => {
+app.post("/api/putData", (req, res) => {
   let data = new Data();
   console.log('yoyoyoyo')
 
@@ -148,6 +148,6 @@ router.post("/putData", (req, res) => {
   
 });
 
-app.use("/api", router);
+// app.use("/api", router);
 
 app.listen(API_PORT, () => console.log(`LISTENING ON UHH PORT ${API_PORT}`));
