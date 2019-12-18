@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
 
-const API_PORT = 3001;
+const API_PORT =  process.env.PORT;
 const app = express();
 
 mongoose.connect(getSecret("dbUri"));
