@@ -6,7 +6,7 @@ const logger = require("morgan");
 const Data = require("./data");
 
 const API_PORT =  process.env.PORT;
-const app = express();
+// const app = express();
 
 mongoose.connect(getSecret("dbUri"));
 let db = mongoose.connection;
@@ -16,20 +16,31 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
-// const router = express.Router();
+const router = express.Router();
 //Static file declaration
 app.use(express.static(path.join(__dirname, '../client/build')));
 //production mode
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  //
+  // app.get('/*', (req, res) => {
+  //   res.sendfile(path.join(__dirname = '../client/build/index.html'));
+  // })
+}
+// //build mode
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname+'/../client/public/index.html'));
+// })
 
 
-app.post("/api/getData", (req, res) => {
+router.post("/getData", (req, res) => {
   Data.find({id: req.body.id},(err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
-app.post("/api/updateData", (req, res) => {
+router.post("/updateData", (req, res) => {
   console.log('hit update')
   console.log(req.body);
   const { itemId, name, startDateTime, endDateTime, classes } = req.body;
@@ -77,7 +88,7 @@ app.post("/api/updateData", (req, res) => {
   // });
 });
 
-app.post("/api/deleteData", (req, res) => {
+router.post("/deleteData", (req, res) => {
   const { itemId, name, startDateTime, endDateTime, classes, userId } = req.body;
   console.log("TCL: userId", userId)
   console.log("TCL: classes", classes)
@@ -107,7 +118,7 @@ app.post("/api/deleteData", (req, res) => {
   })
 });
 
-app.post("/api/putData", (req, res) => {
+router.post("/putData", (req, res) => {
   let data = new Data();
   console.log('yoyoyoyo')
 
@@ -137,18 +148,6 @@ app.post("/api/putData", (req, res) => {
   
 });
 
-// app.use("/api", router);
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-  //
-  app.get('/*', (req, res) => {
-    res.sendfile(path.join(__dirname = '../client/build/index.html'));
-  })
-}
-//build mode
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/../client/public/index.html'));
-})
-
+app.use("/api", router);
 
 app.listen(API_PORT, () => console.log(`LISTENING ON UHH PORT ${API_PORT}`));
