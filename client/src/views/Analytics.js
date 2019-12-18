@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 
-import Analytics from "../components/Analytics";
+import Analytics from "../components/analytics";
 
-const FormFill = () => (
+const AnalyticData = () => (
   <Fragment>
     <Analytics />
     <hr />
   </Fragment>
 );
 
-export default FormFill;
+export default AnalyticData;
