@@ -171,7 +171,7 @@ export default class Agenda extends Component {
   getDataFromDb = () => {
     const userId = localStorage.getItem("account");
     console.log(userId);
-    fetch("/api/getData", {
+    fetch("https://give-me-structure.herokuapp.com/api/getData", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -200,7 +200,7 @@ export default class Agenda extends Component {
   putDataToDB = message => {
     let idToBeAdded = localStorage.getItem("account");
 
-    axios.post("/api/putData", {
+    axios.post("https://give-me-structure.herokuapp.com/api/putData", {
       id: idToBeAdded,
       message: items
     });
@@ -220,7 +220,7 @@ export default class Agenda extends Component {
     console.log(this.state);
     console.log(item._id);
     axios
-      .post("/api/updateData", {
+      .post("https://give-me-structure.herokuapp.com/api/updateData", {
         _id: item._id,
         name: item.name,
         startDateTime: item.startDateTime,
@@ -278,7 +278,7 @@ export default class Agenda extends Component {
     console.log(item);
     this.setState({ items: items });
     axios
-      .post("/api/deleteData", {
+      .post("https://give-me-structure.herokuapp.com/api/deleteData", {
         userId: localStorage.getItem("account"),
         itemId: item._id,
         name: item.name,
@@ -312,7 +312,7 @@ export default class Agenda extends Component {
     console.log(this.state);
     console.log(item._id);
     axios
-      .post("/api/updateData", {
+      .post("https://give-me-structure.herokuapp.com/api/updateData", {
         userId: localStorage.getItem("account"),
         itemId: item._id,
         name: item.name,
