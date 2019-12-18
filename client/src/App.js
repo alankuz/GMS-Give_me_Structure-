@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 
@@ -10,7 +10,7 @@ import Home from "./views/Home";
 import Analytics from "./views/Analytics";
 import Schedule from "./views/Schedule";
 import Profile from "./views/Profile";
-import Contact from "./views/Contact"
+import Contact from "./views/Contact";
 import { useAuth0 } from "./react-auth0-spa";
 import history from "./utils/history";
 
@@ -23,6 +23,12 @@ initFontAwesome();
 
 const App = () => {
   const { loading } = useAuth0();
+  function connecToServer() {
+    fetch("/");
+  }
+  useEffect(() => {
+    connecToServer();
+  });
 
   if (loading) {
     return <Loading />;
@@ -39,7 +45,6 @@ const App = () => {
             <Route path="/analytics" exact component={Analytics} />
             <Route path="/schedule" exact component={Schedule} />
             <Route path="/contact" exact component={Contact} />
-
           </Switch>
         </Container>
         <Footer />
