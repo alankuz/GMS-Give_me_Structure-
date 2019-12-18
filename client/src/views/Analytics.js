@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 
-import Newform from "../components/Newform";
+import Analytics from "../components/Analytics";
 
 const FormFill = () => (
   <Fragment>
-    <Newform />
+    <Analytics />
     <hr />
   </Fragment>
 );

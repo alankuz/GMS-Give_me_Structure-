@@ -29,10 +29,10 @@ const Hero = () => {
 
         <p className="lead">
           <ButtonGroup vertical>
-            <RouterNavLink to="/schedule"><Button color="primary" className="mb-1">View Schedule</Button></RouterNavLink>
-            <Link to="/analytics"><Button color="primary" className="mb-1" >Analytics</Button></Link>
+            <RouterNavLink className="pageButtons" to="/schedule"><Button className="pageButtons" color="primary" className="mb-1">View Schedule</Button></RouterNavLink>
+            <RouterNavLink className="pageButtons" to="/analytics"><Button  className="pageButtons" color="primary" className="mb-1" >Analytics</Button></RouterNavLink>
               <Button className="mb-1">Blog *Coming Soon*</Button>
-              <Button color="primary">Contact</Button>
+              <RouterNavLink className="pageButtons" to="/contact"><Button color="primary">Contact</Button></RouterNavLink>
     </ButtonGroup>
         </p>
       </div>)

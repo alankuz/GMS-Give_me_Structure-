@@ -1,6 +1,6 @@
-@import '~../node_modules/react-agenda/build/styles.css';
-@import '~../node_modules/react-datetime/css/react-datetime.css';
-@import '../node_modules/react-agenda/example/src/App.css';
+@import "~../node_modules/react-agenda/build/styles.css";
+@import "~../node_modules/react-datetime/css/react-datetime.css";
+@import "../node_modules/react-agenda/example/src/App.css";
 .next-steps .fa-link {
   margin-right: 5px;
 }
@@ -37,12 +37,107 @@
   text-align: center;
 }
 .results {
-  font-size:32px;
+  font-size: 32px;
   font-weight: bolder;
   text-align: center;
   display: inline-block;
   width: 50%;
   background-color: blue;
-  color:white;
+  color: white;
   border: solid black;
+}
+.progressBar {
+  margin-top: 2%;
+  width: 100%;
+  font-size: 24px;
+  height: 50px;
+  font-weight: bolder;
+  color: black !important;
+  
+}
+div.progress-bar {
+  color: #b6e7c1;
+  text-align: left;
+  text-shadow: 1px 1px #030303, 
+               2px 2px #030303, 
+               3px 3px #030303;
+  -webkit-transition: all 0.12s ease-out;
+  -moz-transition:    all 0.12s ease-out;
+  -ms-transition:     all 0.12s ease-out;
+  -o-transition:      all 0.12s ease-out;
+}
+div.progress-bar:hover {
+  text-shadow: 1px 1px #030303, 
+  2px 2px #030303, 
+  3px 3px #030303, 
+  4px 4px #030303, 
+  5px 5px #030303, 
+  6px 6px #030303;
+}
+.pageButtons{
+  width:100%
+}
+.SpanGreen{
+  color:green;
+  font-weight: bolder;
+  font-size:18px;
+  text-shadow: 1px 1px rgb(204, 203, 203), 
+  2px 2px rgb(204, 203, 203), 
+  3px 3px rgb(204, 203, 203);
+-webkit-transition: all 0.12s ease-out;
+-moz-transition:    all 0.12s ease-out;
+-ms-transition:     all 0.12s ease-out;
+-o-transition:      all 0.12s ease-out;
+}
+.SpanYellow{
+  color:rgb(255, 255, 4);
+  font-weight: bolder;
+  font-size:18px;
+  text-shadow: 1px 1px rgb(204, 203, 203), 
+  2px 2px rgb(204, 203, 203), 
+  3px 3px rgb(204, 203, 203);
+-webkit-transition: all 0.12s ease-out;
+-moz-transition:    all 0.12s ease-out;
+-ms-transition:     all 0.12s ease-out;
+-o-transition:      all 0.12s ease-out;
+
+}
+.SpanRed{
+  color:red;
+  font-weight: bolder;
+  font-size:18px;
+  text-shadow: 1px 1px rgb(204, 203, 203), 
+  2px 2px rgb(204, 203, 203), 
+  3px 3px rgb(204, 203, 203);
+-webkit-transition: all 0.12s ease-out;
+-moz-transition:    all 0.12s ease-out;
+-ms-transition:     all 0.12s ease-out;
+-o-transition:      all 0.12s ease-out;
+
+}
+.SpanBlue{
+  color:blue;
+  font-weight: bolder;
+  font-size:18px;
+  text-shadow: 1px 1px rgb(204, 203, 203), 
+  2px 2px rgb(204, 203, 203), 
+  3px 3px rgb(204, 203, 203);
+-webkit-transition: all 0.12s ease-out;
+-moz-transition:    all 0.12s ease-out;
+-ms-transition:     all 0.12s ease-out;
+-o-transition:      all 0.12s ease-out;
+
+}
+.SpanPurple{
+  color:Purple;
+  font-weight: bolder;
+  font-size:18px;
+  text-shadow: 1px 1px rgb(204, 203, 203), 
+  2px 2px rgb(204, 203, 203), 
+  3px 3px rgb(204, 203, 203);
+-webkit-transition: all 0.12s ease-out;
+-moz-transition:    all 0.12s ease-out;
+-ms-transition:     all 0.12s ease-out;
+-o-transition:      all 0.12s ease-out;
+
 }
