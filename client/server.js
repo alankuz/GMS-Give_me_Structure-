@@ -6,7 +6,7 @@ const app = express();
 
 const port = process.env.SERVER_PORT;
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(express.static(join(__dirname, "build")));
 
 app.use((_, res) => {
