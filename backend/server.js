@@ -17,6 +17,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 const router = express.Router();
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/public/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 
 router.post("/getData", (req, res) => {
