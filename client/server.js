@@ -5,8 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const Data = require("./data");
 
-
-const API_PORT =  process.env.PORT;
+const API_PORT = process.env.PORT;
 const app = express();
 
 mongoose.connect(getSecret("dbUri"));
@@ -18,13 +17,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
 
   //and remove cacheing so we get the most recent comments
-  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader("Cache-Control", "no-cache");
   next();
 });
 
@@ -34,15 +39,15 @@ app.use(express.static(join(__dirname, "build")));
 app.use((_, res) => {
   res.sendFile(join(__dirname, "build", "index.html"));
 });
-router.post("/getData", (req, res) => {
-  Data.find({id: req.body.id},(err, data) => {
+router.post("https://give-me-structure.herokuapp.com/api/getData", (req, res) => {
+  Data.find({ id: req.body.id }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
-router.post("/updateData", (req, res) => {
-  console.log('hit update')
+router.post("https://give-me-structure.herokuapp.com/api/updateData", (req, res) => {
+  console.log("hit update");
   console.log(req.body);
   const { itemId, name, startDateTime, endDateTime, classes } = req.body;
   // Data.findByIdAndUpdate(_id, update, err => {
@@ -53,30 +58,26 @@ router.post("/updateData", (req, res) => {
   // { $push: { "sensors.0.measurements": { "time": req.body.time } } }
 
   Data.updateOne(
-    { 
-      id: req.body.userId, 
-      "message._id": req.body.itemId 
+    {
+      id: req.body.userId,
+      "message._id": req.body.itemId
     },
-    { 
+    {
       $set: {
         "message.$": {
-          _id:itemId,
+          _id: itemId,
           name,
           startDateTime,
           endDateTime,
           classes
         }
       }
-    } ,
+    },
     (err, res) => {
-    console.log('error: ', err);
-    console.log('res: ', res);
-  })
-
-
-
-
-
+      console.log("error: ", err);
+      console.log("res: ", res);
+    }
+  );
 
   // Data.findByIdAndUpdate({ _id: _id }, {name:name, startDateTime:startDateTime, endDateTime:endDateTime, classes:classes } , (err, docs)=> {
 
@@ -89,51 +90,65 @@ router.post("/updateData", (req, res) => {
   // });
 });
 
-router.post("/deleteData", (req, res) => {
-  const { itemId, name, startDateTime, endDateTime, classes, userId } = req.body;
-  console.log("TCL: userId", userId)
-  console.log("TCL: classes", classes)
-  console.log("TCL: endDateTime", endDateTime)
-  console.log("TCL: startDateTime", startDateTime)
-  console.log("TCL: name", name)
-  console.log("TCL: itemId", itemId)
+router.post("https://give-me-structure.herokuapp.com/api/deleteData", (req, res) => {
+  const {
+    itemId,
+    name,
+    startDateTime,
+    endDateTime,
+    classes,
+    userId
+  } = req.body;
+  console.log("TCL: userId", userId);
+  console.log("TCL: classes", classes);
+  console.log("TCL: endDateTime", endDateTime);
+  console.log("TCL: startDateTime", startDateTime);
+  console.log("TCL: name", name);
+  console.log("TCL: itemId", itemId);
 
   // const arrayWithDataToDelete = Data.find(get the array where the delete needs to happen)
 
   // const newArray = arrayWithDataToDelete.filter(awdto => awdto.email !== itemId)
- 
+
   Data.findOneAndUpdate(
-    { 
-      id: userId, 
-      "message._id": itemId 
+    {
+      id: userId,
+      "message._id": itemId
     },
-    { '$pull': {
-        "message": {
-          '_id': itemId
+    {
+      $pull: {
+        message: {
+          _id: itemId
         }
       }
-    } ,
+    },
     (err, res) => {
-    console.log('error: ', err);
-    console.log('res: ', res);
-  })
+      console.log("error: ", err);
+      console.log("res: ", res);
+    }
+  );
 });
 
-router.post("/putData", (req, res) => {
+router.post("https://give-me-structure.herokuapp.com/api/putData", (req, res) => {
   let data = new Data();
-  console.log('yoyoyoyo')
+  console.log("yoyoyoyo");
 
   const { id, message } = req.body;
-  console.log('req.body', req.body)
-  console.log(id)
-  console.log(message)
-  console.log('\n')
+  console.log("req.body", req.body);
+  console.log(id);
+  console.log(message);
+  console.log("\n");
   // console.log(Data)
 
-  Data.updateOne({ id: id }, { $push: { message: message }},{upsert:true}, (err)=> {
-    if (err) return console.log(err)
-  });
- 
+  Data.updateOne(
+    { id: id },
+    { $push: { message: message } },
+    { upsert: true },
+    err => {
+      if (err) return console.log(err);
+    }
+  );
+
   // if ((!id && id !== 0) || !message) {
   //   return res.json({
   //     success: false,
@@ -146,10 +161,11 @@ router.post("/putData", (req, res) => {
   //   if (err) return res.json({ success: false, error: err });
   //   return res.json({ success: true });
   // });
-  
 });
 
-app.use("/api", router);
-
+// app.use("/api", router);
+app.get("/*", (req, res) => {
+  res.sendfile(path.join((__dirname = "../client/build/index.html")));
+});
 
 app.listen(API_PORT, () => console.log(`LISTENING ON UHH PORT ${API_PORT}`));
